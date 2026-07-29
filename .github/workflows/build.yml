@@ -30,7 +30,6 @@ jobs:
 
       - name: Build debug APKs
         run: ./gradlew :wear:assembleDebug :mobile:assembleDebug --no-daemon --stacktrace --info > build.log 2>&1 || (tail -c 20000 build.log && exit 1)
-gradlew :wear:assembleDebug :mobile:assembleDebug --no-daemon
 
       - name: Rename APKs
         run: |
