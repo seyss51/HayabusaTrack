@@ -19,6 +19,12 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      - name: List wear source files (debug)
+        run: find wear/src -type f | sort
+
+      - name: List mobile source files (debug)
+        run: find mobile/src -type f | sort
+
       - name: Generate Gradle Wrapper (8.7, compatible AGP 8.5.0)
         run: gradle wrapper --gradle-version 8.7 --distribution-type all
 
