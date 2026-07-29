@@ -17,7 +17,6 @@ class TripSyncListenerService : WearableListenerService() {
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     override fun onDataChanged(dataEvents: DataEventBuffer) {
-        val pendingResult = goAsync()
         val events = dataEvents.map { it.freeze() }
         dataEvents.release()
 
@@ -33,8 +32,6 @@ class TripSyncListenerService : WearableListenerService() {
                 }
             } catch (e: Exception) {
                 // log si besoin
-            } finally {
-                pendingResult.finish()
             }
         }
     }
