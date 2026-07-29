@@ -29,7 +29,8 @@ jobs:
         run: gradle wrapper --gradle-version 8.7 --distribution-type all
 
       - name: Build debug APKs
-        run: ./gradlew :wear:assembleDebug :mobile:assembleDebug --no-daemon
+        run: ./gradlew :wear:assembleDebug :mobile:assembleDebug --no-daemon --stacktrace --info > build.log 2>&1 || (tail -c 20000 build.log && exit 1)
+gradlew :wear:assembleDebug :mobile:assembleDebug --no-daemon
 
       - name: Rename APKs
         run: |
