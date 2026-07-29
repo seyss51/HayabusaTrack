@@ -29,7 +29,15 @@ jobs:
         run: gradle wrapper --gradle-version 8.7 --distribution-type all
 
       - name: Build debug APKs
-        run: ./gradlew :wear:assembleDebug :mobile:assembleDebug --no-daemon --stacktrace --info > build.log 2>&1 || (tail -c 20000 build.log && exit 1)
+        run: |
+          ./gradlew :wear:assembleDebug :mobile:assembleDebug --no-daemon > build.log 2>&1 || true
+          echo "=== ERREURS KOTLIN (e:) ==="
+          grep -n "^e:" build.log || echo "(aucune ligne e: trouvée)"
+          echo "=== WARNINGS KOTLIN (w:) ==="
+          grep -n "^w:" build.log || echo "(aucune ligne w: trouvée)"
+          echo "=== STATUT FINAL ==="
+          tail -n 30 build.log
+          grep -q "BUILD SUCCESSFUL" build.log
 
       - name: Rename APKs
         run: |
